@@ -24,8 +24,6 @@ app.use('/api-docs', swaggerUi.serve);
 app.get('/api-docs', swaggerUi.setup(swaggerDocument, swaggerDocumentOptions));
 
 const connectionString = `mongodb://${config.MONGO.USERNAME}:${config.MONGO.PASSWORD}@${config.MONGO.HOST}/${config.MONGO.DBNAME}?authSource=admin`;
-//const connectionString = `mongodb://${config.MONGO.HOST}/${config.MONGO.DBNAME}`;
-//const connectionString = `mongodb://root:example@localhost:27017`;
 mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true }, (err) =>{
   if(err) console.log("error with mongo connection ", err)
   else console.log("successfully connected with mongoDb")
