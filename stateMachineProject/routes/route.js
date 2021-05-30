@@ -8,7 +8,7 @@ var docSMFactory = require('../controller/stateMachineController');
 /**
 * @api {POST} /initiate
 * @apiParam  {String} required [docName]
-* @apiParam  {String} required [targetState] 
+* @apiParam  {String} required [triggerEvent] 
 */
 
 router.post('/initiate', 
@@ -48,8 +48,11 @@ router.get('/:docName',
 
 /***
  *  @api {PUT} 
- * @param [string] emailHash 
- * @abstract reset state for a emailHash
+ *  
+ * @apiParam  {String} required [docName]
+ * @apiParam  {String} required [currentState]
+ * @apiParam  {String} required [sourceState]
+ * @apiParam  {String} required [event]
  * 
  */
  router.put('/updateDocState', 
