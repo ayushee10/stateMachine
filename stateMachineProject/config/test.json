@@ -1,0 +1,13 @@
+{
+    "NODE_ENV": "test",
+    "PORT": 3001,
+    "MONGO": {
+        "AUTH_SOURCE": "admin",
+        "HOST": "localhost:27017",
+        "USERNAME": "root",
+        "PASSWORD": "example",
+        "DBNAME": "test",
+        "BASE64_CACERT": "",
+        "ENC_SECRET": "keyboardcat"
+    }
+}

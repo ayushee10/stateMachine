@@ -1,0 +1,178 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "A Simple State Machine Transition Demo",
+      "description": "",
+      "version": "1.0"
+    },
+    "produces": ["application/json"],
+    "paths": {
+      "/stateMachineDemo/initiate": {
+        "post": {
+            "tags": ["State Machine"],
+            "summary" : "Add State Data",
+            "description": "Use this method to add Data into DB. The triggerEvent would be one of creationRequest or validationRequest or validationRequestAccepted or validationRequestRejected",
+            "produces":["application/json"],
+            "parameters" :[
+                {
+                    "in": "body",
+                    "name": "transitionData",
+                    "description": "Data request object",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/transitionData"
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "successful operation",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "type": "string",
+                                "example": "Transition details updated successfully!"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Failed to create document in DB"
+                }
+            }
+        }
+      },
+      "/stateMachineDemo/{docName}": {
+        "get": {
+            "tags": ["State Machine"],
+            "summary" : "Get Transition Data by document name",
+            "description": "Use this method to get Data from DB.",
+            "produces":["application/json"],
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "docName",
+                    "description": "Data request object",
+                    "required": true
+                }],
+            "responses": {
+               "200": {
+                   "description": "successful operation",
+                   "schema": {
+                    "$ref": "#/definitions/getTransitionDataResponse"
+                   }
+               },
+               "400": {
+                   "description": "Data not present in DB"
+               }
+           }
+        }
+    },
+    "/stateMachineDemo/updateDocState": {  
+        "put": {
+            "tags": ["State Machine"],
+            "summary" : "Reset State Details by docName",
+            "description": "Use this method to Reset State Details by docName in DB.",
+            "produces":["application/json"],
+            "parameters": [
+                {
+                    "in": "body",
+                    "name": "transitionData",
+                    "description": "states would be one of init or created or validationPending or validated or rejected, event would be one of creationRequest or validationRequest or validationRequestAccepted or validationRequestRejected",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/updateTransitionData"
+                    }
+                }
+            ],
+            "responses": {
+               "200": {
+                   "description": "successful operation",
+                   "schema": {
+                       "type": "object",
+                       "properties": {
+                        "message": {
+                            "type": "string",
+                            "example": "State Reset is successful"
+                        }
+                    }
+                   }
+               },
+               "400": {
+                   "description": "Data not present in DB"
+               }
+           }
+        }
+
+      }
+    },
+    "definitions": {
+        "transitionData": {
+            "type": "object",
+            "required": [
+                "docName",
+                "triggerEvent"
+            ],
+            "properties": {
+                "docName": {
+                    "type": "string",
+                    "example": "doc1"
+                },
+                "triggerEvent": {
+                    "type": "string",
+                    "example": "creationRequest"
+                }
+            }
+        },
+        "updateTransitionData": {
+            "type": "object",
+            "required": [
+                "docName",
+                "sourceState",
+                "currentState",
+                "event"
+            ],
+            "properties": {
+                "docName": {
+                    "type": "string",
+                    "example": "doc1"
+                },
+                "sourceState": {
+                    "type": "string",
+                    "example": "init"
+                },
+                "currentState": {
+                    "type": "string",
+                    "example": "created"
+                },
+                "event": {
+                    "type": "string",
+                    "example": "creationRequest"
+                }
+            }
+        },
+        "getTransitionDataResponse": {
+            "type": "object",
+            "properties": {
+                "docName": {
+                    "type": "string",
+                    "example": "doc1"
+                },
+                "sourceState": {
+                    "type": "string",
+                    "example": "init"
+                },
+                "currentState": {
+                    "type": "string",
+                    "example": "created"
+                },
+                "event": {
+                    "type": "string",
+                    "example": "creationRequest"
+                }
+            }
+        }
+        
+        }
+ }

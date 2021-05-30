@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+
+  mongo:
+    hostname: mongo
+    container_name: mongo
+    image: mongo:4.2
+    restart: always
+    ports:
+        - '27017:27017'  
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+        - local-network
+
+  StateMachineService:
+    image: node:10
+    container_name: state_machine_service
+    volumes:
+      - ../stateMachineProject/.:/usr/stateMachineProject
+      - ../stateMachineProject/node_modules:/usr/stateMachineProject/node_modules
+    working_dir: /usr/stateMachineProject
+    env_file: ../stateMachineProject/.env
+    environment:
+        - NODE_ENV=default
+        - MONGO__HOST=mongo
+    links:
+      - mongo
+    command: npm start
+    environment: 
+      - PORT=3000
+    ports:
+      - '3000:3000'
+    networks:
+      - local-network
+
+networks:
+  local-network:
+    driver: bridge

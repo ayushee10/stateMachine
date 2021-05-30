@@ -1,0 +1,13 @@
+{
+    "NODE_ENV": "default",
+    "PORT": 3000,
+    "MONGO": {
+        "AUTH_SOURCE": "admin",
+        "HOST": "mongo:27017",
+        "USERNAME": "root",
+        "PASSWORD": "example",
+        "DBNAME": "State_Machine",
+        "BASE64_CACERT": "",
+        "ENC_SECRET": "keyboardcat"
+    }
+}
